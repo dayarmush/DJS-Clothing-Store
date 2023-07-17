@@ -9,8 +9,10 @@ class Item(db.Model, SM):
     price = db.Column(db.Integer, nullable=False)
     cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
     favorite_id = db.Column(db.Integer, db.ForeignKey('favorites.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.Datetime, onupdate=db.func.now())
 
-    reviews = db.relationship('Review', backref='items')
+    reviews = db.relationship('Review', backref='item')
 
     def __repr__(self):
         return f'<Item {self.name}>'
