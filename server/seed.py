@@ -22,12 +22,14 @@ def create_favorites(users):
 
 # add Cart id and Favorite id
 def create_items(carts, favorites):
+    categories =  ["Men's", "Women's", 'kids']
     items = []
     for i in range(50):
         item = Item(
             name=fake.commerce.product(),
             image=fake.image.fashion(),
             price=randint(0, 100),
+            category=rc(categories),
             cart_id = rc(carts),
             favorites=rc(favorites)
         )
