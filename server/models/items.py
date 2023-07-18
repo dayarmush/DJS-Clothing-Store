@@ -1,4 +1,4 @@
-from ..config import db, SM
+from config import db, SM
 
 class Item(db.Model, SM):
     __tablename__ = 'items'
@@ -8,12 +8,15 @@ class Item(db.Model, SM):
     image = db.Column(db.String, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String, nullable=False)
-    cart_id = db.Column(db.Integer, db.ForeignKey('Shopping_carts.id'))
-    favorite_id = db.Column(db.Integer, db.ForeignKey('favorites.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.Datetime, onupdate=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
+    cart_id = db.Column(db.Integer, db.ForeignKey('shopping_carts.id'))
+    
+    favorites = db.relationship('Favorite', backref='item')
     reviews = db.relationship('Review', backref='item')
+
+    serialize_rules = ('-cart.item', '-favorites.item', '-reviews.item')
 
     def __repr__(self):
         return f'<Item {self.name}>'
