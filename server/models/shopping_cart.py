@@ -1,8 +1,8 @@
 from ..config import db, SM
 
-
 class ShoppingCart(db.Model, SM):
     __tablename__ = 'shopping_carts'
+
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -11,4 +11,3 @@ class ShoppingCart(db.Model, SM):
 
     def __repr__(self):
         return f'<Cart {self.id}'
-

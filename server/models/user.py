@@ -15,6 +15,7 @@ class User(db.Model, SM):
     favorites = db.relationship('Favorites', backref='user')
     reviews = db.relationship('Review', backref='user')
 
+
     @hybrid_property
     def password_hash(self):
         raise AttributeError('Cannot access password')
