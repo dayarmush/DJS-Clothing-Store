@@ -13,7 +13,7 @@ class Favorite(db.Model, SM):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
 
-    serialize_rules = ('-items.favorite', '-user.favorite')
+    serialize_rules = ('-item.favorites', '-user.favorites',)
 
     def __repr__(self):
         return f'<Favorite: {self.id}'

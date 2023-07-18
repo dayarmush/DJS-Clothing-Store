@@ -14,7 +14,7 @@ class ShoppingCart(db.Model, SM):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
 
-    serialize_rules = ('-user.cart', '-item.cart')
+    serialize_rules = ('-user.carts', '-item.carts',)
 
     def __repr__(self):
         return f'<Cart {self.id}'

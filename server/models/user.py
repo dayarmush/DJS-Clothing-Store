@@ -17,7 +17,7 @@ class User(db.Model, SM):
     favorites = db.relationship('Favorite', backref='user')
     reviews = db.relationship('Review', backref='user')
 
-    serialize_rules = ('-carts.user', '-favorites.user', '-reviews.user')
+    serialize_rules = ('-carts.user', '-favorites.user', '-reviews.user',)
 
     @hybrid_property
     def password_hash(self):

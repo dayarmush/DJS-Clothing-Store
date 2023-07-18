@@ -69,7 +69,8 @@ def add_cart():
 
     try:
         cart = ShoppingCart(
-            user_id=data.get('user_id')
+            user_id=data.get('user_id'),
+            item_id=data.get('item_id')
         )
 
         db.session.add(cart)
@@ -184,6 +185,12 @@ def items_by_id(id):
             return item.to_dict(), 201
         except:
             return {'error': 'Edit failed'}
+        
+@app.get('/users')
+def get_users():
+    users = User.query.all()
+
+    return [user.to_dict() for user in users], 200
 
 @app.post('/favorites')
 def add_favorite():
@@ -202,6 +209,18 @@ def add_favorite():
     
     except:
         return {'error': 'Failed to add favorite'}
+    
+@app.delete('/favorites/<int:id>')
+def delete_fave(id):
+    fave = Favorite.query.filter_by(id=id).first()
+
+    if not fave:
+        return {'error': 'No favorite found'}, 404
+    
+    db.session.delete(fave)
+    db.session.commit()
+
+    return {}, 202
 
 @app.post('/login')
 def login():
@@ -225,6 +244,13 @@ def login():
 
     return {'error': 'Username or password in incorrect'}, 400
 
+@app.delete('/logout')
+def logout():
+    if session.get('user_id'):
+        session.clear()
+        return {}, 200
+
+    return {'error': 'Please log in'}
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

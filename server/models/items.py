@@ -15,7 +15,7 @@ class Item(db.Model, SM):
     favorites = db.relationship('Favorite', backref='item')
     reviews = db.relationship('Review', backref='item')
 
-    serialize_rules = ('-cart.item', '-favorites.item', '-reviews.item')
+    serialize_rules = ('-carts.item', '-favorites.item', '-reviews.item',)
 
     def __repr__(self):
         return f'<Item {self.name}>'
