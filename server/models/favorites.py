@@ -1,14 +1,19 @@
-from ..config import db, SM
+from config import db, SM
+
+# favorites class connects 
+# a user and an item
 
 class Favorite(db.Model, SM):
     __tablename__ = 'favorites'
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    updated_at = db.Column(db.Datetime, onupdate=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    items = db.relationship('Item', backref='favorite')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
+
+    serialize_rules = ('-items.favorite', '-user.favorite')
 
     def __repr__(self):
         return f'<Favorite: {self.id}'

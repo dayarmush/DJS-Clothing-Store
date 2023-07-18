@@ -1,4 +1,4 @@
-from ..config import db, Bcrypt, SM
+from config import db, Bcrypt, SM
 from sqlalchemy.ext.hybrid import hybrid_property
 
 bcrypt = Bcrypt()
@@ -10,11 +10,14 @@ class User(db.Model, SM):
     username = db.Column(db.String(50), nullable=False, unique=True)
     _password_hash = db.Column(db.String(50), nullable=False)
     admin = db.Column(db.Boolean, default=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    shopping_cart = db.relationship('ShoppingCart', backref='user')
-    favorites = db.relationship('Favorites', backref='user')
+    carts = db.relationship('ShoppingCart', backref='user')
+    favorites = db.relationship('Favorite', backref='user')
     reviews = db.relationship('Review', backref='user')
 
+    serialize_rules = ('-carts.user', '-favorites.user', '-reviews.user')
 
     @hybrid_property
     def password_hash(self):
