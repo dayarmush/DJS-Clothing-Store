@@ -184,7 +184,6 @@ def items_by_id(id):
             return item.to_dict(), 201
         except:
             return {'error': 'Edit failed'}
-        
 
 @app.post('/favorites')
 def add_favorite():
