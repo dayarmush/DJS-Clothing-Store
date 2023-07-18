@@ -15,7 +15,8 @@ def create_favorites():
     faves = []
     for i in range(30):
         fave = Favorite(
-            user_id=randint(1, 30)
+            user_id=randint(1, 30),
+            item_id=randint(1, 100)
         )
         faves.append(fave)
     return [fave.id for fave in faves], faves
@@ -133,7 +134,6 @@ def create_items():
             price=randint(1, 100),
             category=rc(categories),
             cart_id = randint(1, 10),
-            favorite_id=randint(1, 30)
         )
         items.append(item)
     return [item.id for item in items], items
