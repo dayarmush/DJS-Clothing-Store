@@ -30,13 +30,23 @@ db.init_app(app)
 @app.post('/signup')
 def post_user():
     data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return {'error': 'you need username and password'}, 400
+
+    user = User.query.filter_by(username=username).first()
+
+    if user:
+        return {'error': 'Username already exists'}, 400
 
     try:
         user = User(
-            username=data.get('username')
+            username=username
         )
 
-        user.password_hash = data.get('password')
+        user.password_hash(password)
 
         db.session.add(user)
         db.session.commit()
@@ -97,3 +107,28 @@ def add_review():
     
     except:
         return {'error': 'New review failed'}, 400
+    
+
+@app.post('/login')
+def login():
+    data = request.get_json()
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return {'error': 'Please enter username and password'}, 400
+
+    user = User.query.filter_by(username=username).first()
+
+    if user:
+        if user.authenticate(password):
+            return user.to_dict(rules=('-password_hash')), 201
+
+    session['user_id'] = user.id
+    session['is_admin'] = user.admin
+
+    return {'error': 'Username or password in incorrect'}, 400
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)

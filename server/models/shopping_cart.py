@@ -1,12 +1,14 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from ..config import db, SM
 
 
+class ShoppingCart(db.Model, SM):
+    __tablename__ = 'shopping_carts'
 
-class ShoppingCart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    items = db.relationship('Item', backref='shopping_cart')
+    item = db.relationship('Item', backref='cart')
+
+    def __repr__(self):
+        return f'<Cart {self.id}'
 

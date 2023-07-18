@@ -8,7 +8,7 @@ class Item(db.Model, SM):
     image = db.Column(db.String, nullable=False)
     price = db.Column(db.Integer, nullable=False)
     category = db.Column(db.String, nullable=False)
-    cart_id = db.Column(db.Integer, db.ForeignKey('carts.id'))
+    cart_id = db.Column(db.Integer, db.ForeignKey('Shopping_carts.id'))
     favorite_id = db.Column(db.Integer, db.ForeignKey('favorites.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.Datetime, onupdate=db.func.now())
