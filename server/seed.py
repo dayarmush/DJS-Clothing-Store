@@ -132,8 +132,7 @@ def create_items():
             name=rc(clothing_items),
             image=fake.file_extension(category='image'),
             price=randint(1, 100),
-            category=rc(categories),
-            cart_id = randint(1, 10),
+            category=rc(categories)
         )
         items.append(item)
     return [item.id for item in items], items
@@ -156,7 +155,8 @@ def create_carts():
     carts = []
     for i in range(10):
         cart = ShoppingCart(
-            user_id=randint(1, 30)
+            user_id=randint(1, 30),
+            item_id=randint(1, 100)
         )
         carts.append(cart)
     return [cart.id for cart in carts], carts

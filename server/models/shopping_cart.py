@@ -1,5 +1,8 @@
 from config import db, SM
 
+# Shopping cart is the middle table
+# to connect user with aan item
+
 class ShoppingCart(db.Model, SM):
     __tablename__ = 'shopping_carts'
 
@@ -9,8 +12,7 @@ class ShoppingCart(db.Model, SM):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-
-    item = db.relationship('Item', backref='cart')
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
 
     serialize_rules = ('-user.cart', '-item.cart')
 

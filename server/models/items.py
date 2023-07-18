@@ -11,8 +11,7 @@ class Item(db.Model, SM):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    cart_id = db.Column(db.Integer, db.ForeignKey('shopping_carts.id'))
-    
+    carts = db.relationship('ShoppingCart', backref='item')
     favorites = db.relationship('Favorite', backref='item')
     reviews = db.relationship('Review', backref='item')
 

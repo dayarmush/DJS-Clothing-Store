@@ -1,5 +1,8 @@
 from config import db, SM
 
+# favorites class connects 
+# a user and an item
+
 class Favorite(db.Model, SM):
     __tablename__ = 'favorites'
 
