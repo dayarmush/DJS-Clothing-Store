@@ -12,7 +12,8 @@ class Review(db.Model, SM):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     item_id = db.Column(db.Integer, db.ForeignKey('items.id'), nullable=False)
 
-    serialize_rules = ('-user.reviews', '-item.reviews',)
+    serialize_rules = ('-user.reviews', '-user.favorites', '-user.carts', 
+                       '-item.reviews', '-item.carts', '-item.favorites')
 
     def __repr__(self):
         return f'<Review: {self.user} | {self.rating}'
