@@ -3,7 +3,7 @@ from models.items import Item
 from models.reviews import Review
 from models.shopping_cart import ShoppingCart
 from models.user import User
-from config import Flask, Migrate, db, request, session
+from config import Flask, Migrate, db, request, session, CORS, render_template
 from dotenv import load_dotenv
 import os
 
@@ -29,7 +29,13 @@ migrate = Migrate(app, db)
 # Connecting the flask app to sqlalchemy/db
 db.init_app(app)
 
+CORS(app)
+
 # Routes
+# @app.route('/')
+# def index():
+#     return render_template("index.html")
+
 @app.post('/signup')
 def post_user():
     data = request.get_json()
