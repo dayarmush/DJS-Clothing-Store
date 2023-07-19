@@ -5,22 +5,25 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 function App() {
 
-//   const [items, setItems] = useState()
+  const [items, setItems] = useState([])
 
-//   useEffect(() => {
-//     fetch('http://127.0.0.1:5555/items')
-//     .then(r => r.json())
-//     .then(data => setItems(data))
-//   }, [])
+  useEffect(() => {
+    fetch('/items')
+    .then(r => r.json())
+    .then(data => setItems(data))
+  }, [])
 
-//   const itemsMap = items.map(item => {
-//     <ItemCard item={item}/>
-//   })
+  
 
 
-//   return (
-//     {itemsMap}
-//   );
+  return (
+    <>
+     {items.map(item => {
+    return <ItemCard item={item}/>
+  })}
+    </>
+   
+  );
 }
 
 export default App;
