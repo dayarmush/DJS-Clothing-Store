@@ -8,7 +8,7 @@ class User(db.Model, SM):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False, unique=True)
-    _password_hash = db.Column(db.String(50), nullable=False)
+    _password_hash = db.Column(db.String(50))
     admin = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -17,7 +17,8 @@ class User(db.Model, SM):
     favorites = db.relationship('Favorite', backref='user')
     reviews = db.relationship('Review', backref='user')
 
-    serialize_rules = ('-carts.user', '-favorites.user', '-reviews.user')
+    serialize_rules = ('-carts.user', '-carts.item', '-favorites.user',
+                        '-favorites.item', '-reviews.user', '-reviews.item')
 
     @hybrid_property
     def password_hash(self):

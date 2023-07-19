@@ -46,10 +46,11 @@ def post_user():
 
     try:
         user = User(
-            username=username
+            username=data.get('username'),
+            # admin=True
         )
 
-        user.password_hash(password)
+        user.password_hash = data.get('password')
 
         db.session.add(user)
         db.session.commit()
@@ -60,16 +61,19 @@ def post_user():
             session['is_admin'] = user.admin
 
         return user.to_dict(), 201
+    
     except:
         return {'error': 'Signup failed'}, 400
-    
+
+# Only accessible when logged in 
 @app.post('/carts')
 def add_cart():
     data = request.get_json()
 
     try:
         cart = ShoppingCart(
-            user_id=data.get('user_id')
+            user_id=data.get('user_id'),
+            item_id=data.get('item_id')
         )
 
         db.session.add(cart)
@@ -80,6 +84,7 @@ def add_cart():
     except:
         return {'error': 'Add to cart failed'}, 400
 
+# Only accessible when logged in 
 @app.delete('/carts/<int:id>')
 def delete_cart(id):
 
@@ -93,6 +98,7 @@ def delete_cart(id):
 
     return {}, 200
 
+# Only accessible when logged in 
 @app.post('/reviews')
 def add_review():
     data = request.get_json()
@@ -113,6 +119,7 @@ def add_review():
     except:
         return {'error': 'New review failed'}, 400
     
+# Only accessible when logged in 
 @app.delete('/reviews/<int:id>')
 def delete_reviews(id):
     review = Review.query.filter_by(id=id).first()
@@ -124,7 +131,6 @@ def delete_reviews(id):
     db.session.commit()
 
     return {}, 202
-
 
 @app.get('/items')
 def get_items():
@@ -185,6 +191,14 @@ def items_by_id(id):
         except:
             return {'error': 'Edit failed'}
 
+# This route is for testing purposes       
+@app.get('/users')
+def get_users():
+    users = User.query.all()
+
+    return [user.to_dict(rules=('-_password_hash',)) for user in users], 200
+
+# Only accessible when logged in 
 @app.post('/favorites')
 def add_favorite():
     data = request.get_json()
@@ -202,6 +216,19 @@ def add_favorite():
     
     except:
         return {'error': 'Failed to add favorite'}
+    
+# Only accessible when logged in 
+@app.delete('/favorites/<int:id>')
+def delete_fave(id):
+    fave = Favorite.query.filter_by(id=id).first()
+
+    if not fave:
+        return {'error': 'No favorite found'}, 404
+    
+    db.session.delete(fave)
+    db.session.commit()
+
+    return {}, 202
 
 @app.post('/login')
 def login():
@@ -216,7 +243,7 @@ def login():
 
     if user:
         if user.authenticate(password):
-            return user.to_dict(rules=('-password_hash')), 201
+            return user.to_dict(), 201
 
     session['user_id'] = user.id
 
@@ -225,6 +252,14 @@ def login():
 
     return {'error': 'Username or password in incorrect'}, 400
 
+# Only accessible when logged in 
+@app.delete('/logout')
+def logout():
+    if session.get('user_id'):
+        session.clear()
+        return {}, 200
+
+    return {'error': 'Please log in'}
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
