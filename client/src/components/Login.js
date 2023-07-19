@@ -2,17 +2,15 @@ import { useEffect, useState } from "react";
 
 function Login() {
 
-  const [user, setUser] = useState([])
-  const [info, setInfo] = useState({
-    'username': '',
-    'password': ''
-  })
- 
   const blankLoginForm = {
     'username': '',
     'password': ''
   }
 
+  const [user, setUser] = useState([])
+  const [error, setError] = useState([])
+  const [info, setInfo] = useState(blankLoginForm)
+  
   function handleChange(e) {
     const key = e.target.name
     const value = e.target.value
@@ -24,18 +22,21 @@ function Login() {
   function handleClick() {
     fetch('/login', {
       method: 'POST', 
-      header: {
+      headers: {
       'Content-Type': 'application/json'
       },
       body: JSON.stringify(info)
     })
     .then(r => r.json())
-    .then(data => setUser(data))
+    .then(data => {
+      setUser(data)
+      setInfo(blankLoginForm)
+    })
+    .catch(r => setError(r.body))
   }
   
   return ( 
     <div>
-
       <input 
         type='text' 
         placeholder="Username" 

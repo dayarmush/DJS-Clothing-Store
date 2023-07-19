@@ -249,13 +249,11 @@ def login():
 
     if user:
         if user.authenticate(password):
-            return user.to_dict(), 201
-
-    session['user_id'] = user.id
-
-    if user.admin:
-        session['is_admin'] = user.admin
-
+            session['user_id'] = user.id
+            if user.admin:
+                session['is_admin'] = user.admin
+            return user.to_dict(rules=('-_password_hash',)), 201
+        
     return {'error': 'Username or password in incorrect'}, 400
 
 # Only accessible when logged in 
@@ -266,6 +264,22 @@ def logout():
         return {}, 200
 
     return {'error': 'Please log in'}
+
+@app.get('/items/mens')
+def get_mens_items():
+    items = Item.query.filter_by(category="Men's").all()
+
+    return [item.to_dict() for item in items], 200
+
+@app.get('/items/womens')
+def get_womens_items():
+    items = Item.query.filter_by(category="Women's").all()
+    return [item.to_dict() for item in items]
+
+@app.get('/items/kids')
+def get_kids_items():
+    items = Item.query.filter_by(category="kids").all()
+    return [item.to_dict() for item in items]
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

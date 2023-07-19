@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 const { useEffect, useState } = React;
 
-const ProductList = () => {
+const HomePage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -33,4 +33,4 @@ const ProductList = () => {
 };
 
 
-export default ProductList;
+export default HomePage

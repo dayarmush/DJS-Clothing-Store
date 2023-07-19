@@ -2,6 +2,7 @@ import Login from './components/Login'
 import NavBar from './components/NavBar';
 import { useState, useEffect } from 'react';
 import ItemCard from './components/ItemCard';
+import HomePage from './components/HomeScreen'
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 
@@ -17,7 +18,6 @@ function App() {
 
   return (
     <div>
-      <h1>Hello</h1>
       <NavBar/>
       <div>
         <Routes>
@@ -29,7 +29,7 @@ function App() {
 
           <Route path='/login' element={<Login/>}/>
 
-          <Route exact path='/' element={'home'}/>
+          <Route exact path='/' element={<HomePage/>}/>
 
           <Route path='*' element={<Navigate to='/' />}/>
         </Routes>
