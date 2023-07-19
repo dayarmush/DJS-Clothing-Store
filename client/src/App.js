@@ -4,17 +4,19 @@ import { useState, useEffect } from 'react';
 import ItemCard from './components/ItemCard';
 import HomePage from './components/HomeScreen'
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Signup from './components/Signup';
 
 
 function App() {
 
+  const [user, setUser] = useState([])
   const [items, setItems] = useState([])
 
-  useEffect(() => {
-    fetch('/items')
-    .then(r => r.json())
-    .then(data => setItems(data))
-  }, [])
+  // useEffect(() => {
+  //   fetch('/items')
+  //   .then(r => r.json())
+  //   .then(data => setItems(data))
+  // }, [])
 
   return (
     <div>
@@ -27,7 +29,9 @@ function App() {
 
           <Route path="/kids" element={'Kids'}/>
 
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/login' element={<Login user={user} setUser={setUser}/>}/>
+
+          <Route path='/signup/*' element={<Signup setUser={setUser}/>}/>
 
           <Route exact path='/' element={<HomePage/>}/>
 
