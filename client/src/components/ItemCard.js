@@ -1,15 +1,22 @@
-function ItemCard({item}) {
-  const {name, image, price, reviews, category} = item
+import { Link } from 'react-router-dom'
+import {useState} from 'react'
 
+
+function ItemCard({ item, where }) {
+
+  const {id, name, image, price, reviews, category} = item
 
   return (
-    <div>
-      <h2>{category}</h2>
-      <h1>{name}</h1>
-      <img src={image} alt={name}/>
-      <h2>{price}</h2>
-      {/* {reviews.map(rev => <h3>{rev}</h3>)} */}
-    </div>
+    <Link to={where ? `/items/${id}/${where}` : `/items/${id}`}>
+      <div>
+        <h2>{category}</h2>
+        <h1>{name}</h1>
+        <img src={image} alt={name}/>
+        <h2>${price}</h2>
+        {/* {reviews.map(rev => <h3>{rev}</h3>)} */}
+      </div>
+    </Link>
+    
   )
 }
 

@@ -7,10 +7,17 @@ from config import Flask, Migrate, db, request, session, CORS, render_template
 from dotenv import load_dotenv
 import os
 
+# sys.path.append('/opt/render/project/src/server')
+
 load_dotenv()
 
 # Create Flask Instance
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='/' #,
+    # static_folder='../client/build',
+    # template_folder='../client/build'
+)
 
 # Set the database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
@@ -43,7 +50,7 @@ def post_user():
     password = data.get('password')
 
     if not username or not password:
-        return {'error': 'you need username and password'}, 400
+        return {'error': 'Please enter a username and password'}, 400
 
     user = User.query.filter_by(username=username).first()
 
@@ -166,7 +173,7 @@ def add_item():
         return {'error': 'failed to add item'}, 400
     
 # Admin access only
-@app.route('/items/<int:id>', methods=['DELETE', 'PATCH'])
+@app.route('/items/<int:id>', methods=['DELETE', 'PATCH', 'GET'])
 def items_by_id(id):
     item = Item.query.filter_by(id=id).first()
 
@@ -196,6 +203,9 @@ def items_by_id(id):
             return item.to_dict(), 201
         except:
             return {'error': 'Edit failed'}
+        
+    if request.method == 'GET':
+        return item.to_dict(), 200
 
 # This route is for testing purposes       
 @app.get('/users')
@@ -254,7 +264,7 @@ def login():
                 session['is_admin'] = user.admin
             return user.to_dict(rules=('-_password_hash',)), 201
         
-    return {'error': 'Username or password in incorrect'}, 400
+    return {'error': 'Username or password is incorrect'}, 400
 
 # Only accessible when logged in 
 @app.delete('/logout')
@@ -280,6 +290,15 @@ def get_womens_items():
 def get_kids_items():
     items = Item.query.filter_by(category="kids").all()
     return [item.to_dict() for item in items]
+
+@app.get('/check_session')
+def Check_session():
+    if session.get('user_id'):
+        user = User.query.filter_by(id=session.get('user_id')).first()
+        return user.to_dict(), 200
+    
+    return {'error': 'not logged in'}, 401
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

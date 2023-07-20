@@ -4,16 +4,21 @@ import { useState, useEffect } from 'react';
 import ItemCard from './components/ItemCard';
 import HomePage from './components/HomeScreen'
 import { Routes, Route, Navigate } from 'react-router-dom';
+import Signup from './components/Signup';
+import NewItem from './components/NewItem';
+import ItemDetail from './components/ItemDetail';
+import RemoveDetails from './components/RemoveDetails';
 
 
 function App() {
 
+  const [user, setUser] = useState([])
   const [items, setItems] = useState([])
 
   useEffect(() => {
-    fetch('/items')
+    fetch('/check_session')
     .then(r => r.json())
-    .then(data => setItems(data))
+    .then(data => setUser(data))
   }, [])
 
   return (
@@ -27,7 +32,15 @@ function App() {
 
           <Route path="/kids" element={'Kids'}/>
 
-          <Route path='/login' element={<Login/>}/>
+          <Route path='/login' element={<Login user={user} setUser={setUser}/>}/>
+
+          <Route path='/signup/*' element={<Signup setUser={setUser}/>}/>
+
+          <Route path='/newItem/*' element={<NewItem/>}/>
+
+          <Route path='items/:id/:where' element={<RemoveDetails user={user}/>} />
+
+          <Route path='items/:id/' element={<ItemDetail user={user}/>}/>
 
           <Route exact path='/' element={<HomePage/>}/>
 
