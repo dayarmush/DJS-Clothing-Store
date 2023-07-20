@@ -1,0 +1,29 @@
+.navbar {
+  background-color: #ba842d;
+  color: #fff;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.navbar li a {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar li a:hover {
+  background-color: #555;
+}
