@@ -1,4 +1,4 @@
-
+/* 
 body {
   font-family: Arial, sans-serif;
   background-color: #f0f0f0;
@@ -49,4 +49,30 @@ body {
   text-align: center;
   font-size: 14px;
   color: #333;
+} */
+
+.navbar {
+  background-color: #ba842d;
+  color: #fff;
+  height: 50px;
 }
+
+.navbar ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.navbar li a {
+  display: block;
+  padding: 16px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.navbar li a:hover {
+  background-color: #555;
+}
+
