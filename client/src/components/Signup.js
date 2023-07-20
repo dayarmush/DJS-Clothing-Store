@@ -23,13 +23,18 @@ function Signup({ setUser }) {
       },
       body: JSON.stringify(form)
     })
-    .then(r => r.json())
-    .then(data => {
-      setUser(data)
-      setForm(blankSignupForm)
-      navigate('/login')
+    .then(r => {
+      if (r.ok) {
+        r.json()
+        .then(data => {
+          setUser(data)
+          setForm(blankSignupForm)
+          navigate('/login')
+        })
+      } else {
+        r.json().then(err => setError(err))
+      }
     })
-    .catch(r => setError(r.body))
   }
 
   function handleChange(e) {
@@ -40,30 +45,32 @@ function Signup({ setUser }) {
     })
   }
 
-  // if (error) {
-  //   return <h1>{error}</h1>
-  // }
-
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        placeholder="Username"
-        type="text"
-        name="username"
-        value={form.username}
-        onChange={handleChange}
-      />
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          placeholder="Username"
+          type="text"
+          name="username"
+          value={form.username}
+          onChange={handleChange}
+        />
 
-      <input
-        placeholder="Password"
-        type="password"
-        value={form.password}
-        name="password"
-        onChange={handleChange}
-      />
+        <input
+          placeholder="Password"
+          type="password"
+          value={form.password}
+          name="password"
+          onChange={handleChange}
+        />
 
-      <button>Signup</button>
-    </form>
+        <button>Signup</button>
+      </form>
+
+      {error.error &&
+        <h2>{error.error}</h2>
+      }
+    </div>
   )
 }
 

@@ -43,7 +43,7 @@ def post_user():
     password = data.get('password')
 
     if not username or not password:
-        return {'error': 'you need username and password'}, 400
+        return {'error': 'Please enter a username and password'}, 400
 
     user = User.query.filter_by(username=username).first()
 
@@ -254,7 +254,7 @@ def login():
                 session['is_admin'] = user.admin
             return user.to_dict(rules=('-_password_hash',)), 201
         
-    return {'error': 'Username or password in incorrect'}, 400
+    return {'error': 'Username or password is incorrect'}, 400
 
 # Only accessible when logged in 
 @app.delete('/logout')
@@ -280,6 +280,15 @@ def get_womens_items():
 def get_kids_items():
     items = Item.query.filter_by(category="kids").all()
     return [item.to_dict() for item in items]
+
+@app.get('/check_session')
+def Check_session():
+    if session.get('user_id'):
+        user = User.query.filter_by(id=session.get('user_id')).first()
+        return user.to_dict(), 200
+    
+    return {'error': 'not logged in'}, 401
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

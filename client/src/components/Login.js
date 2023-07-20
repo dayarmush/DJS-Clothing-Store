@@ -35,19 +35,21 @@ function Login({ user, setUser }) {
       },
       body: JSON.stringify(info)
     })
-    .then(r => r.json())
-    .then(data => {
-      setUser(data)
-      setInfo(blankLoginForm)
+    .then(r => {
+      if (r.ok) {
+        r.json()
+        .then(data => {
+          setUser(data)
+          setInfo(blankLoginForm)
+        })
+      } else {
+        r.json().then(err => setError(err))
+      }
     })
-    .catch(r => setError(r))
-  }
-
-  if (error.error) {
-    return <h1>{error}</h1>
+    
   }
   
-  return ( 
+  return (
     <div>
       {!user.username && 
         <div>
@@ -66,6 +68,7 @@ function Login({ user, setUser }) {
             onChange={handleChange}
           />
           <button onClick={handleLogin}>Login</button>
+          {error.error && <h1>{error.error}</h1>}
 
           <NavLink to='/signup'>Signup</NavLink>
 
@@ -95,6 +98,10 @@ function Login({ user, setUser }) {
             user.reviews.map(review => {
               return <h3>{review}</h3>
             })
+          }
+
+          {user.admin && 
+            <NavLink to='/newItem'>Add New Item</NavLink>
           }
 
           <button onClick={HandleLogout}>Logout</button>
