@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom'
 
-function ItemDetail({ user }) {
+function ItemDetail({ user, setUser }) {
 
   const params = useParams()
   const [item, setItem] = useState([])
@@ -38,7 +38,13 @@ function ItemDetail({ user }) {
     })
     .then(r => {
       if (r.ok) {
-        r.json().then(setMessage('Added to Cart'))
+        r.json().then(data => {
+          setMessage('Added to Cart');
+          setUser(pre => {
+            const newCarts = [...pre.carts, data]
+            return {...pre, carts: newCarts}
+          })
+        })
       } else {
         r.json().then(err => setError(err))
       }
@@ -59,7 +65,13 @@ function ItemDetail({ user }) {
     })
     .then(r => {
       if (r.ok) {
-        r.json().then(setMessage('Added to Faves'))
+        r.json().then(data => {
+          setMessage('Added to Favorites')
+          setUser(pre => {
+            const newFave = [...pre.favorites, data]
+            return {...pre, favorites: newFave}
+          })
+        })
       } else {
         r.json().then(err => setError(err))
       }
@@ -96,10 +108,14 @@ function ItemDetail({ user }) {
     })
     .then(r => {
       if (r.ok) {
-        r.json().then(
-          setMessage('Review added'),
+        r.json().then(data => {
           setHasForm(pre => !pre)
-        )
+          setMessage('Review Added')
+          setUser(pre => {
+            const newReview = [...pre.reviews, data]
+            return {...pre, reviews: newReview}
+          })
+        })
       } else {
         r.json().then(err => setError(err))
       }

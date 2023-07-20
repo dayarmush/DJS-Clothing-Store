@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from 'react'
 
-function RemoveDetails({ user }) {
+function RemoveDetails({ user, setUser }) {
 
   const params = useParams()
 
   const [item, setItem] = useState([])
   const [error, setError] = useState([])
   const [message, setMessage] = useState('')
-console.log(params.where)
+
   useEffect(() => {
     fetch(`/items/${params.id}`)
     .then(r => {
@@ -26,7 +26,13 @@ console.log(params.where)
     })
     .then(r => {
       if (r.ok) {
-        r.json().then(setMessage('Item Removed From Cart'))
+        r.json().then(data => {
+          setMessage('Removed from Cart');
+          setUser(pre => {
+            const newCarts = [...pre.carts, data]
+            return {...pre, carts: newCarts}
+          })
+        })
       } else {
         r.json().then(err => setError(err))
       }
@@ -39,7 +45,13 @@ console.log(params.where)
     })
     .then(r => {
       if (r.ok) {
-        r.json().then(setMessage('Item Removed From Faves'))
+        r.json().then(data => {
+          setMessage('removed from Favorites');
+          setUser(pre => {
+            const newFavorites = [...pre.favorites, data]
+            return {...pre, favorites: newFavorites}
+          })
+        })
       } else {
         r.json().then(err => setError(err))
       }

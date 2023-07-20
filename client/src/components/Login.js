@@ -11,6 +11,7 @@ function Login({ user, setUser }) {
 
   const [error, setError] = useState([])
   const [info, setInfo] = useState(blankLoginForm)
+  const [message, setMessage] = useState('')
   
   function handleChange(e) {
     const key = e.target.name
@@ -48,8 +49,21 @@ function Login({ user, setUser }) {
     })
   }
 
-  function deleteReview(e) {
-    console.log(e.target)
+  function deleteReview(id) {
+    fetch(`/reviews/${id}`, {
+      method: 'DELETE'
+    })
+    .then(r => {
+      if (r.ok) {
+        r.json().then(
+          fetch('/check_session')
+          .then(r => r.json())
+          .then(data => setUser(data))
+        )
+      } else {
+        r.json().then(err => setError(err))
+      }
+    })
   }
   
   return (
@@ -104,7 +118,7 @@ function Login({ user, setUser }) {
                   <h3>Rating: {review.rating}</h3>
                   <p>Review: {review.text}</p>
                   <p>Item: {review.item.name}</p>
-                  <button onClick={deleteReview}>Delete</button>
+                  <button onClick={() => deleteReview(review.id)}>Delete</button>
                 </div>
               )
             })

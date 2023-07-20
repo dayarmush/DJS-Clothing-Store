@@ -2,7 +2,7 @@ import Login from './components/Login'
 import NavBar from './components/NavBar';
 import { useState, useEffect } from 'react';
 import ItemCard from './components/ItemCard';
-import HomePage from './components/HomeScreen'
+import HomePage from './components/homeScreen'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import NewItem from './components/NewItem';
@@ -38,9 +38,9 @@ function App() {
 
           <Route path='/newItem/*' element={<NewItem/>}/>
 
-          <Route path='items/:id/:where' element={<RemoveDetails user={user}/>} />
+          <Route path='items/:id/:where' element={<RemoveDetails user={user} setUser={setUser}/>} />
 
-          <Route path='items/:id/' element={<ItemDetail user={user}/>}/>
+          <Route path='items/:id/' element={<ItemDetail user={user} setUser={setUser}/>}/>
 
           <Route exact path='/' element={<HomePage/>}/>
 
