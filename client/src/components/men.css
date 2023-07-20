@@ -80,9 +80,6 @@ h1 {
   background-color: #ba842d;
   color: #fff;
   height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .navbar ul {
@@ -90,9 +87,7 @@ h1 {
   margin: 0;
   padding: 0;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex-grow: 1;
+  justify-content: space-evenly;
 }
 
 .navbar li a {
@@ -106,3 +101,12 @@ h1 {
   background-color: #555;
 }
 
+.slideshow-container {
+  width: 100%;
+  height: 50c;
+}
+
+.slideshow-container img {
+  width: 100%;
+  height: auto;
+}

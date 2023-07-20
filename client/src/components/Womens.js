@@ -1,34 +1,76 @@
-import React, { useContext } from 'react';
-// import product context
-import { ProductContext } from '../contexts/ProductContext';
-// import components
-import Product from '../components/Product';
-import Hero from '../components/Hero';
+import React, { useState, useEffect } from 'react';
+import './women.css';
 
-const Home = () => {
-  // get products from product context
-  const { products } = useContext(ProductContext);
-  // get only men's & women's clothing category
-  const filteredProducts = products.filter((item) => {
-    return (
-      item.category === "men's clothing" || item.category === "women's clothing"
-    );
-  });
+
+function Slideshow() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const images = [
+    'https://assets.vogue.com/photos/61e9c42f201fe8db0bc39899/4:3/w_900,h_675,c_limit/00_promo.jpg',
+    'https://i.insider.com/54fdc12decad042920ceb0c8?width=800&format=jpeg',
+    'https://media.istockphoto.com/id/1293366109/photo/this-one-match-perfect-with-me.jpg?s=612x612&w=0&k=20&c=wJ6yYbRrDfdmoViuQkX39s2z_0lCiNQYgEtLU--0EbY=',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) =>
+        prevSlide === images.length - 1 ? 0 : prevSlide + 1
+      );
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [images.length]);
 
   return (
-    <div>
-      <Hero />
-      <section className='py-16'>
-        <div className='container mx-auto'>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0'>
-            {filteredProducts.map((product) => {
-              return <Product product={product} key={product.id} />;
-            })}
-          </div>
-        </div>
-      </section>
+    <div className="slideshow-container">
+      <img src={images[currentSlide]} alt={`Slide ${currentSlide + 1}`} />
+      <div className="dot-container">
+        {images.map((_, index) => (
+          <span
+            key={index}
+            className={currentSlide === index ? 'active' : ''}
+            onClick={() => setCurrentSlide(index)}
+          ></span>
+        ))}
+      </div>
     </div>
   );
-};
+}
 
-export default Home;
+function WomenItems() {
+    const [items, setItems] = useState([]);
+  
+    useEffect(() => {
+      fetch('/items')
+        .then((response) => response.json())
+        .then((data) => setItems(data))
+        .catch((error) => {
+          console.error('Error fetching items:', error);
+        });
+    }, []);
+  
+  return (
+    <>
+    <h1>Women's Department</h1>
+    <Slideshow />
+      <div>
+        {items.map((item) => {
+          if (item.category === "Women's") {
+            return (
+              <div key={item.id}>
+                <img src={item.image} alt={item.name} />
+                <p>{item.name}</p>
+                <p>{"$"}{item.price}</p>
+              </div>
+            );
+          }
+          return null;
+        })}
+      </div>
+      </>
+    );
+  }
+
+export default WomenItems;

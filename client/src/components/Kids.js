@@ -1,48 +1,76 @@
-// import React, { useState, useEffect } from 'react';
-// import './kids.css';
+import React, { useState, useEffect } from 'react';
+import './kids.css';
 
-// function KidStuff() {
-//   // Component logic and JSX code
+function Slideshow() {
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-//   return (
-//     <div>
-//       {/* JSX content for the KidStuff component */}
-//     </div>
-//   );
-// }
+  const images = [
+    'https://media1.popsugar-assets.com/files/thumbor/Vl8siWdewF18bkglNsc_fMJ7oGA/0x0:2875x1342/fit-in/1048x489/filters:format_auto-!!-:strip_icc-!!-/2021/11/12/659/n/1922564/c99eb59e618e7ef94c8511.80465920_.jpg',
+    'https://www.usatoday.com/gcdn/presto/2022/07/22/USAT/66195ac0-9e1f-4e4b-8c7f-5234d7dcf909-back-to-school-outfit-Hanna-Andersson.png',
+    'https://akns-images.eonline.com/eol_images/Entire_Site/202275/rs_1024x759-220805095514-1024-ecomm-Back_to_School_Sales-gj.jpg?fit=around%7C1024:759&output-quality=90&crop=1024:759;center,top',
+  ];
 
-// export default KidStuff;
-// import React, { useContext } from 'react';
-// // import product context
-// import { ProductContext } from '../contexts/ProductContext';
-// // import components
-// import Product from '../components/Product';
-// import Hero from '../components/Hero';
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prevSlide) =>
+        prevSlide === images.length - 1 ? 0 : prevSlide + 1
+      );
+    }, 4000);
 
-// const Home = () => {
-//   // get products from product context
-//   const { products } = useContext(ProductContext);
-//   // get only men's & women's clothing category
-//   const filteredProducts = products.filter((item) => {
-//     return (
-//       item.category === "men's clothing" || item.category === "women's clothing"
-//     );
-//   });
+    return () => {
+      clearInterval(interval);
+    };
+  }, [images.length]);
 
-//   return (
-//     <div>
-//       <Hero />
-//       <section className='py-16'>
-//         <div className='container mx-auto'>
-//           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-[30px] max-w-sm mx-auto md:max-w-none md:mx-0'>
-//             {filteredProducts.map((product) => {
-//               return <Product product={product} key={product.id} />;
-//             })}
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
+  return (
+    <div className="slideshow-container">
+      <img src={images[currentSlide]} alt={`Slide ${currentSlide + 1}`} />
+      <div className="dot-container">
+        {images.map((_, index) => (
+          <span
+            key={index}
+            className={currentSlide === index ? 'active' : ''}
+            onClick={() => setCurrentSlide(index)}
+          ></span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
-// export default Home;
+function KidItems() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch('/items')
+      .then((response) => response.json())
+      .then((data) => setItems(data))
+      .catch((error) => {
+        console.error('Error fetching items:', error);
+      });
+  }, []);
+
+  return (
+    <>
+    <h1>Kids Department</h1>
+    <Slideshow />
+    <div>
+      {items.map((item) => {
+        if (item.category === 'kids') {
+          return (
+            <div key={item.id}>
+              <img src={item.image} alt={item.name} />
+              <p>{item.name}</p>
+              <p>{"$"}{item.price}</p>
+            </div>
+          );
+        }
+        return null;
+      })}
+      </div>
+      </>
+  );
+}
+
+export default KidItems;
+

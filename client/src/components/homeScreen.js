@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import './home.css';
+import './homeScreen.css';
 
 function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,7 +15,7 @@ function Slideshow() {
       setCurrentSlide((prevSlide) =>
         prevSlide === images.length - 1 ? 0 : prevSlide + 1
       );
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearInterval(interval);
