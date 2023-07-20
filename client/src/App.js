@@ -82,9 +82,9 @@ function App() {
 
           <Route path='/newItem/*' element={<NewItem/>}/>
 
-          <Route path='items/:id/:where' element={<RemoveDetails user={user}/>} />
+          <Route path='items/:id/:where' element={<RemoveDetails user={user} setUser={setUser}/>} />
 
-          <Route path='items/:id/' element={<ItemDetail user={user}/>}/>
+          <Route path='items/:id/' element={<ItemDetail user={user} setUser={setUser}/>}/>
 
           <Route exact path='/' element={<HomePage/>}/>
 
