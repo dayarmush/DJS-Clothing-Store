@@ -11,7 +11,7 @@ flask-login==0.6.2
 flask-migrate==4.0.4
 flask-sqlalchemy==3.0.5
 gunicorn==21.2.0
-importlib-metadata==6.8.0 ; python_version < '3.10'
+importlib-metadata==6.7.0 ; python_version < '3.10'
 importlib-resources==6.0.0 ; python_version < '3.9'
 itsdangerous==2.1.2 ; python_version >= '3.7'
 jinja2==3.1.2 ; python_version >= '3.7'
