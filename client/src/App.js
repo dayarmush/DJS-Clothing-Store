@@ -1,14 +1,58 @@
+// import Login from "./components/Login";
+// import NavBar from "./components/NavBar";
+// import { useState, useEffect } from "react";
+// import ItemCard from "./components/ItemCard";
+// import HomePage from "./components/homeScreen";
+// import KidItems from "./components/Kids";
+// import MenItems from "./components/mens";
+// import WomenItems from "./components/Womens";
+// import { Routes, Route, Navigate } from "react-router-dom";
+
+// function App() {
+//   const [items, setItems] = useState([]);
+
+  // useEffect(() => {
+  //   fetch("/items")
+  //     .then((r) => r.json())
+  //     .then((data) => setItems(data));
+  // }, []);
+
+  // return (
+  //   <div>
+  //     <NavBar />
+  //     <div>
+  //       <Routes>
+  //         <Route path="/mens" element={<MenItems />} />
+
+  //         <Route path="/Womens" element={<WomenItems />} />
+
+  //         <Route path="/Kids" element={<KidItems />} />
+
+  //         <Route path="/login" element={<Login />} />
+
+  //         <Route exact path="/" element={<HomePage />} />
+
+  //         <Route path="*" element={<Navigate to="/" />} />
+  //       </Routes>
+  //     </div>
+  //   </div>
+  // );
+// }
+
+// export default App;
 import Login from './components/Login'
 import NavBar from './components/NavBar';
 import { useState, useEffect } from 'react';
 import ItemCard from './components/ItemCard';
-import HomePage from './components/homeScreen'
+import HomePage from "./components/homeScreen";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import NewItem from './components/NewItem';
 import ItemDetail from './components/ItemDetail';
 import RemoveDetails from './components/RemoveDetails';
-
+import KidItems from "./components/Kids";
+import MenItems from "./components/mens";
+import WomenItems from "./components/Womens";
 
 function App() {
 
@@ -26,11 +70,11 @@ function App() {
       <NavBar/>
       <div>
         <Routes>
-          <Route path="/mens" element={'mens'}/>
+        <Route path="/mens" element={<MenItems />} />
 
-          <Route path="/womens" element={'Womens'}/>
+        <Route path="/Womens" element={<WomenItems />} />
 
-          <Route path="/kids" element={'Kids'}/>
+        <Route path="/Kids" element={<KidItems />} />
 
           <Route path='/login' element={<Login user={user} setUser={setUser}/>}/>
 
