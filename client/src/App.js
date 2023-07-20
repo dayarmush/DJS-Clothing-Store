@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import NewItem from './components/NewItem';
 import ItemDetail from './components/ItemDetail';
+import RemoveDetails from './components/RemoveDetails';
 
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
 
           <Route path='/newItem/*' element={<NewItem/>}/>
 
-          <Route path='items/:id/:where' element={'where'} />
+          <Route path='items/:id/:where' element={<RemoveDetails user={user}/>} />
 
           <Route path='items/:id/' element={<ItemDetail user={user}/>}/>
 

@@ -46,7 +46,10 @@ function Login({ user, setUser }) {
         r.json().then(err => setError(err))
       }
     })
-    
+  }
+
+  function deleteReview(e) {
+    console.log(e.target)
   }
   
   return (
@@ -82,21 +85,28 @@ function Login({ user, setUser }) {
           {user.carts && 
             <h2>Cart</h2> &&
             user.carts.map(item => {
-              return <ItemCard key={item.id} item={item.item} where={'cart'}/>
+              return <ItemCard key={item.id} item={item.item} where={item.id}/>
             })
           }
 
           {user.favorites &&
             <h2>Favorites</h2> &&
             user.favorites.map(item => {
-              return <ItemCard key={item.id} item={item.item} />
+              return <ItemCard key={item.id} item={item.item} where={item.id}/>
             })
           }
 
           {user.reviews &&
             <h2>Reviews</h2> &&
             user.reviews.map(review => {
-              return <h3>{review.text}</h3>
+              return (
+                <div key={review.id}>
+                  <h3>Rating: {review.rating}</h3>
+                  <p>Review: {review.text}</p>
+                  <p>Item: {review.item.name}</p>
+                  <button onClick={deleteReview}>Delete</button>
+                </div>
+              )
             })
           }
 
