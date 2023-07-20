@@ -14,9 +14,9 @@ load_dotenv()
 # Create Flask Instance
 app = Flask(
     __name__,
-    static_url_path='/' #,
-    # static_folder='../client/build',
-    # template_folder='../client/build'
+    static_url_path='/',
+    static_folder='../client/build',
+    template_folder='../client/build'
 )
 
 # Set the database URI
@@ -39,9 +39,9 @@ db.init_app(app)
 CORS(app)
 
 # Routes
-# @app.route('/')
-# def index():
-#     return render_template("index.html")
+@app.route('/')
+def index():
+    return render_template("index.html")
 
 @app.post('/signup')
 def post_user():
@@ -60,7 +60,7 @@ def post_user():
     try:
         user = User(
             username=data.get('username'),
-            # admin=True
+            admin=True
         )
 
         user.password_hash = data.get('password')
