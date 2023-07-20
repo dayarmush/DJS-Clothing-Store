@@ -82,21 +82,21 @@ function Login({ user, setUser }) {
           {user.carts && 
             <h2>Cart</h2> &&
             user.carts.map(item => {
-              return <ItemCard key={item.id} item={item.item}/>
+              return <ItemCard key={item.id} item={item.item} where={'cart'}/>
             })
           }
 
           {user.favorites &&
             <h2>Favorites</h2> &&
             user.favorites.map(item => {
-              return <ItemCard key={item.id} item={item.item}/>
+              return <ItemCard key={item.id} item={item.item} />
             })
           }
 
           {user.reviews &&
             <h2>Reviews</h2> &&
             user.reviews.map(review => {
-              return <h3>{review}</h3>
+              return <h3>{review.text}</h3>
             })
           }
 

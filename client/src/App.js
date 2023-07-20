@@ -6,6 +6,7 @@ import HomePage from './components/HomeScreen'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
 import NewItem from './components/NewItem';
+import ItemDetail from './components/ItemDetail';
 
 
 function App() {
@@ -35,6 +36,10 @@ function App() {
           <Route path='/signup/*' element={<Signup setUser={setUser}/>}/>
 
           <Route path='/newItem/*' element={<NewItem/>}/>
+
+          <Route path='items/:id/:where' element={'where'} />
+
+          <Route path='items/:id/' element={<ItemDetail user={user}/>}/>
 
           <Route exact path='/' element={<HomePage/>}/>
 

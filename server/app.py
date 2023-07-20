@@ -7,10 +7,17 @@ from config import Flask, Migrate, db, request, session, CORS, render_template
 from dotenv import load_dotenv
 import os
 
+# sys.path.append('/opt/render/project/src/server')
+
 load_dotenv()
 
 # Create Flask Instance
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_url_path='/' #,
+    # static_folder='../client/build',
+    # template_folder='../client/build'
+)
 
 # Set the database URI
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
@@ -166,7 +173,7 @@ def add_item():
         return {'error': 'failed to add item'}, 400
     
 # Admin access only
-@app.route('/items/<int:id>', methods=['DELETE', 'PATCH'])
+@app.route('/items/<int:id>', methods=['DELETE', 'PATCH', 'GET'])
 def items_by_id(id):
     item = Item.query.filter_by(id=id).first()
 
@@ -196,6 +203,9 @@ def items_by_id(id):
             return item.to_dict(), 201
         except:
             return {'error': 'Edit failed'}
+        
+    if request.method == 'GET':
+        return item.to_dict(), 200
 
 # This route is for testing purposes       
 @app.get('/users')
