@@ -257,7 +257,7 @@ if __name__ == '__main__':
 #     session.add_all(items)
 #     session.add_all(reviews)
 #     session.commit()
-__________________________________________________
+
 #     clothing_items = {
 #         "Men's": {
 #             "T-shirt": {'image': 'https://imgs.michaels.com/MAM/assets/1/5E3C12034D34434F8A9BAAFDDF0F8E1B/img/617E940D442246D4AA2F229D24F20BAE/10707691_1.jpg', 'price': 20},
