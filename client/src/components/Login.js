@@ -67,10 +67,11 @@ function Login({ user, setUser }) {
   }
   
   return (
-    <div>
+    <div Id='login'>
       {!user.username && 
         <div>
           <input 
+            className="loginInfo"
             type='text' 
             placeholder="Username" 
             value={info.username}
@@ -78,6 +79,7 @@ function Login({ user, setUser }) {
             onChange={handleChange}
           />
           <input
+            className="loginInfo"
             type="password"
             placeholder="Password"
             name="password"

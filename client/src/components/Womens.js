@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './women.css';
-
+import ItemCard from './ItemCard';
+// import './women.css';
 
 function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const images = [
-    'https://assets.vogue.com/photos/61e9c42f201fe8db0bc39899/4:3/w_900,h_675,c_limit/00_promo.jpg',
-    'https://i.insider.com/54fdc12decad042920ceb0c8?width=800&format=jpeg',
-    'https://media.istockphoto.com/id/1293366109/photo/this-one-match-perfect-with-me.jpg?s=612x612&w=0&k=20&c=wJ6yYbRrDfdmoViuQkX39s2z_0lCiNQYgEtLU--0EbY=',
+    'https://media-cldnry.s-nbcnews.com/image/upload/t_fit-760w,f_auto,q_auto:best/newscms/2017_09/1198835/sp17_nwmn_on_location_dumbo_01_219_f1c.jpg',
+    'https://clothesmentor.com/cdn/shop/files/ClothesMentor_SpringFashion_ShopOnline2.jpg?v=1676580892&width=1500',
+    'https://advancelocal-adapter-image-uploads.s3.amazonaws.com/image.al.com/home/bama-media/width2048/img/spotnews/photo/prompaloozajpg-d94fffb07d117162.jpg',
   ];
 
   useEffect(() => {
@@ -40,37 +40,39 @@ function Slideshow() {
 }
 
 function WomenItems() {
-    const [items, setItems] = useState([]);
-  
-    useEffect(() => {
-      fetch('/items')
-        .then((response) => response.json())
-        .then((data) => setItems(data))
-        .catch((error) => {
-          console.error('Error fetching items:', error);
-        });
-    }, []);
-  
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch('/items')
+      .then((response) => response.json())
+      .then((data) => setItems(data))
+      .catch((error) => {
+        console.error('Error fetching items:', error);
+      });
+  }, []);
+
   return (
     <>
-    <h1>Women's Department</h1>
-    <Slideshow />
-      <div>
+      <h1>Women's Department</h1>
+      <Slideshow />
+      <div id="product-container">
         {items.map((item) => {
           if (item.category === "Women's") {
             return (
-              <div key={item.id}>
-                <img src={item.image} alt={item.name} />
-                <p>{item.name}</p>
-                <p>{"$"}{item.price}</p>
-              </div>
+              <ItemCard
+                className="product"
+                key={item.id}
+                item={item}
+                where=""
+              />
             );
           }
           return null;
         })}
       </div>
-      </>
-    );
+    </>
+  );
   }
 
 export default WomenItems;
+

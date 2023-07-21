@@ -1,45 +1,3 @@
-// import Login from "./components/Login";
-// import NavBar from "./components/NavBar";
-// import { useState, useEffect } from "react";
-// import ItemCard from "./components/ItemCard";
-// import HomePage from "./components/homeScreen";
-// import KidItems from "./components/Kids";
-// import MenItems from "./components/mens";
-// import WomenItems from "./components/Womens";
-// import { Routes, Route, Navigate } from "react-router-dom";
-
-// function App() {
-//   const [items, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("/items")
-  //     .then((r) => r.json())
-  //     .then((data) => setItems(data));
-  // }, []);
-
-  // return (
-  //   <div>
-  //     <NavBar />
-  //     <div>
-  //       <Routes>
-  //         <Route path="/mens" element={<MenItems />} />
-
-  //         <Route path="/Womens" element={<WomenItems />} />
-
-  //         <Route path="/Kids" element={<KidItems />} />
-
-  //         <Route path="/login" element={<Login />} />
-
-  //         <Route exact path="/" element={<HomePage />} />
-
-  //         <Route path="*" element={<Navigate to="/" />} />
-  //       </Routes>
-  //     </div>
-  //   </div>
-  // );
-// }
-
-// export default App;
 import Login from './components/Login'
 import NavBar from './components/NavBar';
 import { useState, useEffect } from 'react';
@@ -53,6 +11,9 @@ import RemoveDetails from './components/RemoveDetails';
 import KidItems from "./components/Kids";
 import MenItems from "./components/mens";
 import WomenItems from "./components/Womens";
+import './components/NavBar.css';
+import './components/homeScreen.css';
+
 
 function App() {
 

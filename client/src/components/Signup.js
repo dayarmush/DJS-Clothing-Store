@@ -46,9 +46,10 @@ function Signup({ setUser }) {
   }
 
   return (
-    <div>
+    <div className='login'>
       <form onSubmit={handleSubmit}>
         <input
+          className="loginInfo"
           placeholder="Username"
           type="text"
           name="username"
@@ -57,6 +58,7 @@ function Signup({ setUser }) {
         />
 
         <input
+          className="loginInfo"
           placeholder="Password"
           type="password"
           value={form.password}
@@ -64,7 +66,7 @@ function Signup({ setUser }) {
           onChange={handleChange}
         />
 
-        <button>Signup</button>
+        <button className="loginInfo">Signup</button>
       </form>
 
       {error.error &&

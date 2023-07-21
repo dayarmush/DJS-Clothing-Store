@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './homeScreen.css';
+import ItemCard from './ItemCard';
 
 function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -38,37 +38,34 @@ function Slideshow() {
   );
 }
 
-const HomePage = () => {
-  const [products, setProducts] = useState([]);
+function HomePage() {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products')
-      .then((res) => res.json())
-      .then((json) => setProducts(json))
-      .catch((error) => console.error('Error:', error));
-
-    document.cookie = 'key=value; SameSite=Strict';
+    fetch('/items')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => setItems(data))
+      .catch((error) => {
+        console.error('Error fetching items:', error);
+      });
   }, []);
-
-  if (products.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
       <h1>Welcome To DJ'S Clothing Store</h1>
-      <Slideshow />
+        <Slideshow />
       <div id="product-container">
-        {products.map((product) => (
-          <div key={product.id} className="product">
-            <h2>{product.title}</h2>
-            <img src={product.image} alt={product.title} />
-            <p>{product.price}</p>
-          </div>
+        {items.map((item) => (
+          <ItemCard className="product" key={item.id} item={item} where="" />
         ))}
       </div>
     </>
   );
-};
+}
 
 export default HomePage;
