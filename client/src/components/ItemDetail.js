@@ -22,7 +22,7 @@ function ItemDetail({ user, setUser }) {
         r.json().then(err => setError(err))
       }
     })
-  }, [])
+  }, [params.id])
 
   function addCart() {
     if (!user) return <h3>Please sign in</h3>
@@ -125,7 +125,7 @@ function ItemDetail({ user, setUser }) {
   return (
     <div>
       <h2>{item.name}</h2>
-      <img src={item.image}/>
+      <img src={item.image} alt={item.name}/>
       <h5>${item.price}</h5>
       {item.reviews &&
         item.reviews.map(review => {

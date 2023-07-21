@@ -83,7 +83,7 @@
 // export default MenItems;
 
 import React, { useState, useEffect } from 'react';
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 import './men.css';
 import './NavBar.css';
 

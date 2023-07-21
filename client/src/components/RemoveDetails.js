@@ -18,7 +18,7 @@ function RemoveDetails({ user, setUser }) {
         r.json().then(err => setError(err))
       }
     })
-  }, [])
+  }, [params.id])
 
   function removeCart() {
     fetch(`/carts/${params.where}`, {
@@ -62,7 +62,7 @@ function RemoveDetails({ user, setUser }) {
   return (
       <div>
       <h2>{item.name}</h2>
-      <img src={item.image}/>
+      <img src={item.image} alt={item.name}/>
       <h5>${item.price}</h5>
       {item.reviews &&
           item.reviews.map(review => {

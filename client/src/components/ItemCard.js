@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import {useState} from 'react'
+// import {useState} from 'react'
 
 
 function ItemCard({ item, where }) {
 
-  const {id, name, image, price, reviews, category} = item
+  const {id, name, image, price, category} = item
 
   return (
     <Link to={where ? `/items/${id}/${where}` : `/items/${id}`}>

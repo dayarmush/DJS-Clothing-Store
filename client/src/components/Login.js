@@ -11,7 +11,7 @@ function Login({ user, setUser }) {
 
   const [error, setError] = useState([])
   const [info, setInfo] = useState(blankLoginForm)
-  const [message, setMessage] = useState('')
+  // const [message, setMessage] = useState('')
   
   function handleChange(e) {
     const key = e.target.name

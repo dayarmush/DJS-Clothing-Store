@@ -6,8 +6,9 @@ from models.user import User
 from config import Flask, Migrate, db, request, session, CORS, render_template
 from dotenv import load_dotenv
 import os
+import sys
 
-# sys.path.append('/opt/render/project/src/server')
+sys.path.append('/opt/render/project/src/server')
 
 load_dotenv()
 

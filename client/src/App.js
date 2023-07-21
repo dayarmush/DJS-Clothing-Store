@@ -43,7 +43,7 @@
 import Login from './components/Login'
 import NavBar from './components/NavBar';
 import { useState, useEffect } from 'react';
-import ItemCard from './components/ItemCard';
+// import ItemCard from './components/ItemCard';
 import HomePage from "./components/homeScreen";
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './components/Signup';
@@ -57,7 +57,7 @@ import WomenItems from "./components/Womens";
 function App() {
 
   const [user, setUser] = useState([])
-  const [items, setItems] = useState([])
+  // const [items, setItems] = useState([])
 
   useEffect(() => {
     fetch('/check_session')
