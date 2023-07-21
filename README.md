@@ -40,20 +40,20 @@ To run the DJS Clothing Store project locally, follow these steps:
 2. Clone the project repository from [GitHub](https://github.com/dayarmush/DJS-Clothing-Store).
 3. Navigate to the server folder and set up the backend environment:
 
-`cd server`
-`pipenv install`
-`pipenv shell`
-`flask db upgrade`
-`python seed.py`
-`python app.py`
+- `cd server`
+- `pipenv install`
+- `pipenv shell`
+- `flask db upgrade`
+- `python seed.py`
+- `python app.py`
 
 4. Open a new terminal window, navigate to the client folder, and set up the frontend environment:
 
-`cd client`
-`npm install`
-`npm run`
+- `cd client`
+- `npm install`
+- `npm run`
 
-Contributing
+## Contributing
 Contributions to the DJS Clothing Store project are highly appreciated. If you encounter any issues or have suggestions for improvements, please create a pull request or open an issue on the GitHub repository.
 
 Happy shopping! 🛍️
