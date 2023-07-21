@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
 import ItemCard from './ItemCard';
+import SlideShow from './SlideShow';
 
-
-function Slideshow() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+function MenItems() {
+  const [items, setItems] = useState([]);
 
   const images = [
     'https://assets.vogue.com/photos/61e9c42f201fe8db0bc39899/4:3/w_900,h_675,c_limit/00_promo.jpg',
@@ -13,38 +12,7 @@ function Slideshow() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) =>
-        prevSlide === images.length - 1 ? 0 : prevSlide + 1
-      );
-    }, 3000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [images.length]);
-
-  return (
-    <div className="slideshow-container">
-      <img src={images[currentSlide]} alt={`Slide ${currentSlide + 1}`} />
-      <div className="dot-container">
-        {images.map((_, index) => (
-          <span
-            key={index}
-            className={currentSlide === index ? 'active' : ''}
-            onClick={() => setCurrentSlide(index)}
-          ></span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MenItems() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    fetch('/items')
+    fetch('/items/mens')
       .then((response) => response.json())
       .then((data) => setItems(data))
       .catch((error) => {
@@ -54,26 +22,21 @@ function MenItems() {
 
   return (
     <>
-      <h1>Men's Department</h1>
-      <Slideshow />
+      <SlideShow images={images}/>
       <div id="product-container">
         {items.map((item) => {
-          if (item.category === "Men's") {
             return (
               <ItemCard
                 className="product"
                 key={item.id}
                 item={item}
-                where=""
               />
             );
           }
-          return null;
-        })}
+        )}
       </div>
     </>
   );
 }
 
 export default MenItems;
-

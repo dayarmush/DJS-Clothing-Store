@@ -61,7 +61,7 @@ def post_user():
     try:
         user = User(
             username=data.get('username'),
-            admin=True
+            # admin=True
         )
 
         user.password_hash = data.get('password')
@@ -294,7 +294,8 @@ def get_kids_items():
 
 @app.get('/check_session')
 def Check_session():
-    if session.get('user_id'):
+    
+    if session.get('user_id') is not None:
         user = User.query.filter_by(id=session.get('user_id')).first()
         return user.to_dict(), 200
     

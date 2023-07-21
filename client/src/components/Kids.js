@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ItemCard from './ItemCard';
+import SlideShow from './SlideShow'
 
-function Slideshow() {
-  const [currentSlide, setCurrentSlide] = useState(0);
+function KidItems() {
+  const [items, setItems] = useState([]);
 
   const images = [
     'https://media1.popsugar-assets.com/files/thumbor/Vl8siWdewF18bkglNsc_fMJ7oGA/0x0:2875x1342/fit-in/1048x489/filters:format_auto-!!-:strip_icc-!!-/2021/11/12/659/n/1922564/c99eb59e618e7ef94c8511.80465920_.jpg',
@@ -11,38 +12,7 @@ function Slideshow() {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) =>
-        prevSlide === images.length - 1 ? 0 : prevSlide + 1
-      );
-    }, 4000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [images.length]);
-
-  return (
-    <div className="slideshow-container">
-      <img src={images[currentSlide]} alt={`Slide ${currentSlide + 1}`} />
-      <div className="dot-container">
-        {images.map((_, index) => (
-          <span
-            key={index}
-            className={currentSlide === index ? 'active' : ''}
-            onClick={() => setCurrentSlide(index)}
-          ></span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function KidItems() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    fetch('/items')
+    fetch('/items/kids')
       .then((response) => response.json())
       .then((data) => setItems(data))
       .catch((error) => {
@@ -52,21 +22,16 @@ function KidItems() {
 
   return (
         <>
-          <h1>Kids Department</h1>
-          <Slideshow />
+          <SlideShow images={images}/>
           <div id="product-container">
             {items.map((item) => {
-              if (item.category === 'kids') {
                 return (
                   <ItemCard
                     className="product"
                     key={item.id}
                     item={item}
-                    where=""
                   />
                 );
-              }
-              return null;
             })}
           </div>
         </>

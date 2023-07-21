@@ -25,7 +25,7 @@ function ItemDetail({ user, setUser }) {
   }, [params.id])
 
   function addCart() {
-    if (!user) return <h3>Please sign in</h3>
+    if (!user.username) return setMessage('Please sign in')
     fetch('/carts', {
       method: 'POST',
       headers: {
@@ -52,7 +52,7 @@ function ItemDetail({ user, setUser }) {
   }
 
   function addFave() {
-    if (!user) return <h3>Please sign in</h3>
+    if (!user.username) return setMessage('Please sign in')
     fetch('/favorites', {
       method: 'POST',
       headers: {
@@ -79,7 +79,7 @@ function ItemDetail({ user, setUser }) {
   }
 
   function review() {
-    if (!user) return <h3>Please sign in</h3>
+    if (!user.username) return setMessage('Please sign in')
     setHasForm(pre => !pre)
   }
 
@@ -115,6 +115,10 @@ function ItemDetail({ user, setUser }) {
             const newReview = [...pre.reviews, data]
             return {...pre, reviews: newReview}
           })
+          setItem(pre => {
+            const newReview = [...pre.reviews, data]
+            return {...pre, reviews: newReview}
+          })
         })
       } else {
         r.json().then(err => setError(err))
@@ -131,6 +135,7 @@ function ItemDetail({ user, setUser }) {
         item.reviews.map(review => {
           return (
             <div key={review.id}>
+              <h2>Review</h2>
               <h2>Rating: {review.rating}</h2>
               <p>Review: {review.text}</p>
               <p>User: {review.user.username}</p>
