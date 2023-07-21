@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './kids.css';
+import ItemCard from './ItemCard';
 
 function Slideshow() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -51,26 +51,26 @@ function KidItems() {
   }, []);
 
   return (
-    <>
-    <h1>Kids Department</h1>
-    <Slideshow />
-    <div>
-      {items.map((item) => {
-        if (item.category === 'kids') {
-          return (
-            <div key={item.id}>
-              <img src={item.image} alt={item.name} />
-              <p>{item.name}</p>
-              <p>{"$"}{item.price}</p>
-            </div>
-          );
-        }
-        return null;
-      })}
-      </div>
-      </>
-  );
-}
+        <>
+          <h1>Kids Department</h1>
+          <Slideshow />
+          <div id="product-container">
+            {items.map((item) => {
+              if (item.category === 'kids') {
+                return (
+                  <ItemCard
+                    className="product"
+                    key={item.id}
+                    item={item}
+                    where=""
+                  />
+                );
+              }
+              return null;
+            })}
+          </div>
+        </>
+      );
+    }
 
 export default KidItems;
-
